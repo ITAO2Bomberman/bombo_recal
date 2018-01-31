@@ -20,6 +20,7 @@ public class Oberfläche extends javax.swing.JFrame implements KeyListener{
     public Oberfläche() {
         this.addKeyListener(this);
         initComponents();
+        figur1.setv(v);
     }
 
     /**
@@ -114,7 +115,7 @@ public class Oberfläche extends javax.swing.JFrame implements KeyListener{
         
         
         if (e.getKeyCode() == KeyEvent.VK_UP) {
-            if(k.Kollisionsberechnung(v.getX_player1(), v.getY_player1()-16, v.getHindernisse())== false && k.Kollisionsberechnung(v.getX_player1(), v.getY_player1()) == false){
+            if(k.Kollisionsberechnung(v.getX_player1(), v.getY_player1()-16, v.getHindernisse())== false && k.Kollisionsberechnung(v.getX_player1(), v.getY_player1(), v) == false){
                              
                 
             v.setY_player1(v.getY_player1() - 16);

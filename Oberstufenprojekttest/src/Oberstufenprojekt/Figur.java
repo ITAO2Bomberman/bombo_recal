@@ -13,7 +13,7 @@ public class Figur extends JPanel{
     Variablen v1 = new Variablen();
     public Figur() {
    this.setPreferredSize(new Dimension(v1.getDimension_width(), v1.getDimension_height()));
-        
+    
     
     
     }
@@ -29,4 +29,5 @@ public class Figur extends JPanel{
         g.fillRect(v1.getX_player1(), v1.getY_player1(), 16, 16);
         
     }   
+    
 }
