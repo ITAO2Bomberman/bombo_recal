@@ -21,7 +21,7 @@ public class Figur extends JPanel{
         v1= v;
     }
     public void paintComponent(Graphics g){
-        Spielfeld s = new Spielfeld(16, 16);
+        Spielfeld s = new Spielfeld(16, 16, v1);
         
         
         s.paintComponent(g);

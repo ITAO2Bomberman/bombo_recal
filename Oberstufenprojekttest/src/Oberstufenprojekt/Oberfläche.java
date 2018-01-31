@@ -15,7 +15,7 @@ import java.awt.event.KeyListener;
 public class Oberfläche extends javax.swing.JFrame implements KeyListener{
     
     Variablen v = new Variablen();
-    Kollision k = new Kollision();
+    Kollision k = new Kollision(v.getSpielfeld());
     
     public Oberfläche() {
         this.addKeyListener(this);
@@ -114,8 +114,9 @@ public class Oberfläche extends javax.swing.JFrame implements KeyListener{
         
         
         if (e.getKeyCode() == KeyEvent.VK_UP) {
-            if(k.Kollisionsberechnung(v.getX_player1(), v.getY_player1()-16, v.getHindernisse())== false){
-            
+            if(k.Kollisionsberechnung(v.getX_player1(), v.getY_player1()-16, v.getHindernisse())== false && k.Kollisionsberechnung(v.getX_player1(), v.getY_player1()) == false){
+                             
+                
             v.setY_player1(v.getY_player1() - 16);
             }
         }

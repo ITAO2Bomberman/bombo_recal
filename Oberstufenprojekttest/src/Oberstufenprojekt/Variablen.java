@@ -15,16 +15,28 @@ public class Variablen {
     private int Dimension_width = 16*16;
     private int Dimension_height = 16*17;
     private int[][] Hindernisse = {{32,64,1},{32,96,2},{32,128,3}} ;
-
-    public int[][] getSpielfeld() {
-        return Spielfeld;
+    private int[][][] spielfeld;
+    private int [][] Spielfeldnormal;
+    
+    
+    public int[][] getSpielfeldnormal() {
+        return Spielfeldnormal;
     }
 
-    public void setSpielfeld(int[][] Spielfeld) {
-        this.Spielfeld = Spielfeld;
+    public void setSpielfeldnormal(int[][] Spielfeld) {
+        this.Spielfeldnormal = Spielfeld;
+    }
+
+    public int[][][] getSpielfeld() {
+        
+        return spielfeld;
+    }
+
+    public void setSpielfeld(int[][][] spielfeld) {
+        this.spielfeld = spielfeld;
     }
    
-    private int[][] Spielfeld;
+    
 
     public int[][] getHindernisse() {
         return Hindernisse;

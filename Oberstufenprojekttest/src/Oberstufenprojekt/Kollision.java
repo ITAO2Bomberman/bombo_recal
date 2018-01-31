@@ -8,8 +8,16 @@ package Oberstufenprojekt;
 /**
  *
  * @author MichaL
- */
+
+
+*/
 public class Kollision {
+    int[][][] spielfeld;
+
+    public Kollision(int[][][] spielfeld) {
+        this.spielfeld = spielfeld;
+    }
+    
     public boolean Kollisionsberechnung(int x, int y, int[][] eisberg){
         Variablen v = new Variablen();
         for (int i = 0; i < eisberg.length; i++) {
@@ -24,4 +32,21 @@ public class Kollision {
         }
         return false;
     }
+
+public boolean Kollisionsberechnung(int x, int y){
+        for (int i = 0; i < spielfeld.length; i++) {
+            for (int j = 0; j < spielfeld[0].length; j++) {
+                if(spielfeld[j][i][0] == x && spielfeld[j][i][1] == y){
+                    if (spielfeld[j][i][2] == 0) {
+                      return true;  
+                    }
+                    else{
+                    
+                    }
+                }
+            }
+    }
+    return false;
+    
+}
 }

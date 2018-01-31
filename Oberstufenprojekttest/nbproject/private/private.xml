@@ -5,10 +5,12 @@
         <group>
             <file>file:/E:/Oberstufenprojekttest/src/Oberstufenprojekt/Figur.java</file>
             <file>file:/E:/Oberstufenprojekttest/src/Oberstufenprojekt/Variablen.java</file>
+            <file>file:/E:/Oberstufenprojekttest/src/Oberstufenprojekt/Feld.java</file>
             <file>file:/E:/Oberstufenprojekttest/src/Oberstufenprojekt/Kollision.java</file>
             <file>file:/E:/Oberstufenprojekttest/src/Oberstufenprojekt/TestFeld.java</file>
             <file>file:/E:/Oberstufenprojekttest/src/Oberstufenprojekt/TestSpielfeld.java</file>
             <file>file:/E:/Oberstufenprojekttest/src/Oberstufenprojekt/Oberfläche.java</file>
+            <file>file:/E:/Oberstufenprojekttest/src/Oberstufenprojekt/Spielfeld.java</file>
         </group>
     </open-files>
 </project-private>

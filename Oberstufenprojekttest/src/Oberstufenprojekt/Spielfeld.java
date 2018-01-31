@@ -20,9 +20,10 @@ public class Spielfeld extends JPanel {
     private int y;
     Variablen v = new Variablen();
 
-    public Spielfeld(int breite, int hoehe) {
+    public Spielfeld(int breite, int hoehe, Variablen va) {
         x = breite;
         y = hoehe;
+        va = v;
         int[][] feld =  new int[hoehe][breite];
         for (int i = 0; i < feld.length; i++) {
             for (int j = 0; j < feld[i].length; j++) {
@@ -38,11 +39,11 @@ public class Spielfeld extends JPanel {
             feld[i][0] = 1;
             feld[i][feld[i].length-1] = 1;
         }
-        v.setSpielfeld(feld);
+        v.setSpielfeldnormal(feld);
     }
 
     public void paintComponent(Graphics g) {
-        int[][] p = v.getSpielfeld();
+        int[][] p = v.getSpielfeldnormal();
         int[][][] c = new int[p.length][p[0].length][3];
         int breakable = 0;
         for (int i = 0; i < y; i++) {
@@ -62,9 +63,10 @@ public class Spielfeld extends JPanel {
                 c[i][j][0]=j*16;
                 c[i][j][1]=i*16;
                 c[i][j][2]=breakable;
-                
+              
             }
         }
+        v.setSpielfeld(c);
         
     }
 }
