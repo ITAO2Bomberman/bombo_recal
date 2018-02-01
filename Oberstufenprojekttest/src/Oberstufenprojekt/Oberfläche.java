@@ -16,6 +16,7 @@ public class Oberfläche extends javax.swing.JFrame implements KeyListener{
     
     Variablen v = new Variablen();
     Kollision k = new Kollision(v.getSpielfeld());
+    Bombe b = new Bombe();
     
     public Oberfläche() {
         this.addKeyListener(this);
@@ -115,7 +116,7 @@ public class Oberfläche extends javax.swing.JFrame implements KeyListener{
         
         
         if (e.getKeyCode() == KeyEvent.VK_UP) {
-            if(k.Kollisionsberechnung(v.getX_player1(), v.getY_player1()-16, v.getHindernisse())== false && k.Kollisionsberechnung(v.getX_player1(), v.getY_player1(), v) == false){
+            if(k.Kollisionsberechnung(v.getX_player1(), v.getY_player1()-16, v.getHindernisse())== false /*&& k.Kollisionsberechnung(v.getX_player1(), v.getY_player1(), v) == false*/){
                              
                 
             v.setY_player1(v.getY_player1() - 16);
@@ -138,6 +139,9 @@ public class Oberfläche extends javax.swing.JFrame implements KeyListener{
              if(k.Kollisionsberechnung(v.getX_player1()+16, v.getY_player1(), v.getHindernisse())== false){
             v.setX_player1(v.getX_player1() + 16);
         } 
+        }
+        if (e.getKeyCode() == KeyEvent.VK_Y) {
+           
         }
         figur1.setv(v);
         repaint();

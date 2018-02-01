@@ -17,10 +17,20 @@ public class Variablen {
     private int[][] Hindernisse = {{32,64,1},{32,96,2},{32,128,3}} ;
     private int[][][] spielfeld;
     private int [][] Spielfeldnormal;
+    //Array für Bombenpositionen
+    private int[][] bomben;
     
     
     public int[][] getSpielfeldnormal() {
         return Spielfeldnormal;
+    }
+
+    public int[][] getBomben() {
+        return bomben;
+    }
+
+    public void setBomben(int[][] bomben) {
+        this.bomben = bomben;
     }
 
     public void setSpielfeldnormal(int[][] Spielfeld) {
