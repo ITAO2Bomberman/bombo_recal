@@ -5,117 +5,101 @@
  */
 package ita.bombermangame;
 
-import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.net.URL;
-import javax.swing.ImageIcon;
 
 /**
  *
  * @author ala_pascal
  */
 public class Trump extends Charakter {
-    private int dx,dy,x,y;
-    private Image sprite;
-    private URL[] charURL;
-    private int key=KeyEvent.VK_DOWN;
-    
-    public Trump(){
+
+    public Trump() {
         initChar();
-    }
-    
-    @Override
-    void initChar() {
-        charURL=charSprites();
-        sprite=loadCharSprite();
-        x=72;
-        y=16;
+        super.charURL = charSprites();
     }
 
     @Override
-    URL[] charSprites() {
-        URL[] re=new URL[4];
-        for(int i =0;i<4;i++){
-            re[i]=Trump.class.getResource("sprites/trump/"+(i+1)+".png");
+    public void initChar() {
+        charURL = charSprites();
+        super.x = 72;
+        super.y = 16;
+        super.heigth=16;
+        super.width=16;
+    }
+
+    @Override
+    protected URL[] charSprites() {
+        URL[] re = new URL[4];
+        for (int i = 0; i < 4; i++) {
+            re[i] = Trump.class.getResource("sprites/trump/" + (i + 1) + ".png");
         }
         return re;
     }
 
     @Override
-    Image loadCharSprite() {
-        switch(key){
-            case KeyEvent.VK_LEFT:{
-                return new ImageIcon(charURL[1]).getImage();
+    public void move() {
+        if (!mov) {
+        } else {
+            super.y += super.dy;
+            super.x += super.dx;
+            if(super.x<72){
+                super.x=72;
             }
-            case KeyEvent.VK_RIGHT:{
-                return new ImageIcon(charURL[2]).getImage();
+            if(super.y<16){
+                super.y=16;
             }
-            case KeyEvent.VK_UP:{
-                return new ImageIcon(charURL[3]).getImage();
+            if(super.x>424){
+                super.x=424;
             }
-            case KeyEvent.VK_DOWN:{
-                return new ImageIcon(charURL[0]).getImage();
+            if(super.y>208){
+                super.y=208;
             }
+            System.out.println("x "+super.x+" y "+super.y);
         }
-        return null;
-    }
-
-    @Override
-    void move() {
-        y+=dy;
-        x+=dx;
-    }
-
-    @Override
-    int getX() {
-        return x;
-    }
-
-    @Override
-    int getY() {
-        return y;
-    }
-
-    @Override
-    void keyPressed(KeyEvent e) {
-        int key=e.getKeyCode();
         
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        key = e.getKeyCode();
+
         if (key == KeyEvent.VK_LEFT) {
-            dx = -1;
+            super.dx = -16;
         }
 
         if (key == KeyEvent.VK_RIGHT) {
-            dx = 1;
+            super.dx = 16;
         }
 
         if (key == KeyEvent.VK_UP) {
-            dy = -1;
+            super.dy = -16;
         }
 
         if (key == KeyEvent.VK_DOWN) {
-            dy = 1;
+            super.dy = 16;
         }
     }
 
     @Override
-    void keyReleased(KeyEvent e) {
-        int key = e.getKeyCode();
+    public void keyReleased(KeyEvent e) {
+        key = e.getKeyCode();
 
         if (key == KeyEvent.VK_LEFT) {
-            dx = 0;
+            super.dx = 0;
         }
 
         if (key == KeyEvent.VK_RIGHT) {
-            dx = 0;
+            super.dx = 0;
         }
 
         if (key == KeyEvent.VK_UP) {
-            dy = 0;
+            super.dy = 0;
         }
 
         if (key == KeyEvent.VK_DOWN) {
-            dy = 0;
+            super.dy = 0;
         }
     }
-    
+
 }

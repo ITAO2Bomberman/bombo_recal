@@ -6,31 +6,70 @@
 package ita.bombermangame;
 
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.net.URL;
+import javax.swing.ImageIcon;
 /**
  *
  * @author ala_pascal
  */
-abstract class Charakter {
+public abstract class Charakter {
     
-    private int dx,dy,x,y;
-    private Image sprite;
-    private URL[] charURL;
+    protected int dx,dy,x,y, width, heigth;
+    protected Image sprite;
+    protected URL[] charURL;
+    protected boolean mov=true;
+    protected int key=KeyEvent.VK_DOWN;
     
-    abstract void initChar();
+    public abstract void initChar();
     
-    abstract URL[] charSprites();
+    protected void getImageDimensions(){
+        
+        heigth= sprite.getHeight(null);
+        width=sprite.getWidth(null);
+        
+    }
     
-    abstract Image loadCharSprite();
+    protected abstract URL[] charSprites();
     
-    abstract void move();
+    public Image loadCharSprite(){
+        switch(key){
+            case KeyEvent.VK_LEFT:{
+                return new ImageIcon(charURL[1]).getImage();
+            }
+            case KeyEvent.VK_RIGHT:{
+                return new ImageIcon(charURL[2]).getImage();
+            }
+            case KeyEvent.VK_UP:{
+                return new ImageIcon(charURL[3]).getImage();
+            }
+            case KeyEvent.VK_DOWN:{
+                return new ImageIcon(charURL[0]).getImage();
+            }
+        }
+        return new ImageIcon(charURL[0]).getImage();
+    }
     
-    abstract int getX();
+    public abstract void move();
     
-    abstract int getY();
+    public int getX(){
+        return x;
+    }
     
-    abstract void keyPressed(KeyEvent e);
+    public int getY(){
+        return y;
+    }
     
-    abstract void keyReleased(KeyEvent e);
+    public void setMovable(Boolean mov){
+        this.mov=mov;
+    }
+    
+    public Rectangle getBounds(){
+        return new Rectangle(x, y, width, heigth);
+    }
+    
+    public abstract void keyPressed(KeyEvent e);
+    
+    public abstract void keyReleased(KeyEvent e);
 }
