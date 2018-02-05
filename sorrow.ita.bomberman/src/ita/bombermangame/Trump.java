@@ -24,8 +24,8 @@ public class Trump extends Charakter {
         charURL = charSprites();
         super.x = 72;
         super.y = 16;
-        super.heigth=16;
-        super.width=16;
+        super.heigth = 16;
+        super.width = 16;
     }
 
     @Override
@@ -41,23 +41,33 @@ public class Trump extends Charakter {
     public void move() {
         if (!mov) {
         } else {
-            super.y += super.dy;
-            super.x += super.dx;
-            if(super.x<72){
-                super.x=72;
+            boolean wall = false;
+            for (int xw : super.xInner) {
+                for (int yw : super.yInner) {
+                    if (xw == super.x + super.dx && yw == super.y + super.dy) {
+                        wall = true;
+                    }
+                }
             }
-            if(super.y<16){
-                super.y=16;
+            if (wall == false) {
+                super.y += super.dy;
+                super.x += super.dx;
             }
-            if(super.x>424){
-                super.x=424;
+            if (super.x < 72) {
+                super.x = 72;
             }
-            if(super.y>208){
-                super.y=208;
+            if (super.y < 16) {
+                super.y = 16;
             }
-            System.out.println("x "+super.x+" y "+super.y);
+            if (super.x > 424) {
+                super.x = 424;
+            }
+            if (super.y > 208) {
+                super.y = 208;
+            }
+            System.out.println("x " + super.x + " y " + super.y);
         }
-        
+
     }
 
     @Override

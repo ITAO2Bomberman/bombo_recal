@@ -21,6 +21,8 @@ public abstract class Charakter {
     protected URL[] charURL;
     protected boolean mov=true;
     protected int key=KeyEvent.VK_DOWN;
+    protected final int[] xInner = {88, 120, 152, 184, 216, 248, 280, 312, 344, 376, 408};
+    protected final int[] yInner = {32, 64, 96, 128, 160, 192};
     
     public abstract void initChar();
     

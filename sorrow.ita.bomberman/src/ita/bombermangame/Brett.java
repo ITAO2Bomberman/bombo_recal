@@ -29,13 +29,12 @@ public class Brett extends JPanel implements ActionListener {
     private final int B_WIDTH = 480;
     private final int B_HEIGHT = 272;
 
-    private final int[] xInner = {88, 120, 152, 184, 216, 248, 280, 312, 344, 376, 408};
-    private final int[] yInner = {32, 64, 96, 128, 160, 192};
+//    private final int[] xInner = {88, 120, 152, 184, 216, 248, 280, 312, 344, 376, 408};
+//    private final int[] yInner = {32, 64, 96, 128, 160, 192};
 
     private Charakter c1;
     private Image outerWall;
     private Image innerWall;
-    private int[] keys = {KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT};
 
     public Brett() {
         initBrett();
@@ -122,48 +121,48 @@ public class Brett extends JPanel implements ActionListener {
         g2d.drawImage(c1.loadCharSprite(), c1.getX(), c1.getY(), this);
     }
 
-    public void checkCollision(KeyEvent e) {
-        int factorx = 0;
-        int factory = 0;
-        Rectangle r1 = c1.getBounds();
-        switch (e.getKeyCode()) {
-            case KeyEvent.VK_UP: {
-                factory = -16;
-                break;
-            }
-            case KeyEvent.VK_DOWN: {
-                factory = 16;
-                break;
-            }
-            case KeyEvent.VK_LEFT: {
-                factorx = -16;
-                break;
-            }
-            case KeyEvent.VK_RIGHT: {
-                factorx = 16;
-                break;
-            }
-            default: {
-                factorx = 0;
-                factory = 0;
-                break;
-            }
-        }
-        Boolean block = false;
-        for (int x : xInner) {
-            for (int y : yInner) {
-                if (x + factorx == r1.x && y + factory == r1.y) {
-                    block = true;
-                } 
-            }
-        }
-        if (block) {
-            c1.setMovable(false);
-        } else {
-            c1.setMovable(true);
-        }
-
-    }
+//    public void checkCollision(KeyEvent e) {
+//        int factorx = 0;
+//        int factory = 0;
+//        Rectangle r1 = c1.getBounds();
+//        switch (e.getKeyCode()) {
+//            case KeyEvent.VK_UP: {
+//                factory = -16;
+//                break;
+//            }
+//            case KeyEvent.VK_DOWN: {
+//                factory = 16;
+//                break;
+//            }
+//            case KeyEvent.VK_LEFT: {
+//                factorx = -16;
+//                break;
+//            }
+//            case KeyEvent.VK_RIGHT: {
+//                factorx = 16;
+//                break;
+//            }
+//            default: {
+//                factorx = 0;
+//                factory = 0;
+//                break;
+//            }
+//        }
+//        Boolean block = false;
+//        for (int x : xInner) {
+//            for (int y : yInner) {
+//                if (x + factorx == r1.x && y + factory == r1.y) {
+//                    block = true;
+//                } 
+//            }
+//        }
+//        if (block) {
+//            c1.setMovable(false);
+//        } else {
+//            c1.setMovable(true);
+//        }
+//
+//    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -181,7 +180,7 @@ public class Brett extends JPanel implements ActionListener {
         @Override
         public void keyPressed(KeyEvent e) {
             c1.keyPressed(e);
-            checkCollision(e);
+//            checkCollision(e);
             c1.move();
             repaint();
         }
