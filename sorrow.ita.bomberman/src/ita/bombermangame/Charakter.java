@@ -17,8 +17,8 @@ import javax.swing.ImageIcon;
 public abstract class Charakter {
     
     protected int dx,dy,x,y, width, heigth;
-    protected Image sprite;
     protected URL[] charURL;
+    protected URL bombURL;
     protected boolean mov=true;
     protected int key=KeyEvent.VK_DOWN;
     protected final int[] xInner = {88, 120, 152, 184, 216, 248, 280, 312, 344, 376, 408};
@@ -26,14 +26,13 @@ public abstract class Charakter {
     
     public abstract void initChar();
     
-    protected void getImageDimensions(){
-        
-        heigth= sprite.getHeight(null);
-        width=sprite.getWidth(null);
-        
-    }
+    protected abstract URL bombSprite();
     
     protected abstract URL[] charSprites();
+    
+    public Image loadBombSprite(){
+        return new ImageIcon(bombURL).getImage();
+    }
     
     public Image loadCharSprite(){
         switch(key){

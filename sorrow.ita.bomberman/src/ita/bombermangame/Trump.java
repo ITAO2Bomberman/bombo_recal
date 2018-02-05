@@ -29,6 +29,11 @@ public class Trump extends Charakter {
     }
 
     @Override
+    protected URL bombSprite() {
+        return Trump.class.getResource("sprites/bombs/bombAmi.png");
+    }
+    
+    @Override
     protected URL[] charSprites() {
         URL[] re = new URL[4];
         for (int i = 0; i < 4; i++) {

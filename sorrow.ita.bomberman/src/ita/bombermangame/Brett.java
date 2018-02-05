@@ -10,7 +10,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,6 +18,7 @@ import java.awt.event.KeyEvent;
 import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 /**
  *
@@ -28,10 +28,10 @@ public class Brett extends JPanel implements ActionListener {
 
     private final int B_WIDTH = 480;
     private final int B_HEIGHT = 272;
-
+    private Timer timer;
+    
 //    private final int[] xInner = {88, 120, 152, 184, 216, 248, 280, 312, 344, 376, 408};
 //    private final int[] yInner = {32, 64, 96, 128, 160, 192};
-
     private Charakter c1;
     private Image outerWall;
     private Image innerWall;
@@ -51,6 +51,9 @@ public class Brett extends JPanel implements ActionListener {
 
         outerWall = loadImage(ita.bombermangame.Brett.class.getResource("sprites/mauer/mauergeil.png"));
         innerWall = loadImage(ita.bombermangame.Brett.class.getResource("sprites/mauer/pixelmauermitte.png"));
+        
+        timer=new Timer(100, this);
+        timer.start();
     }
 
     private Image loadImage(URL path) {
@@ -101,6 +104,12 @@ public class Brett extends JPanel implements ActionListener {
     public void paintComponent(Graphics g
     ) {
         super.paintComponent(g);
+        paintWalls(g);
+        paintChar(g);
+        Toolkit.getDefaultToolkit().sync();
+    }
+
+    private void paintWalls(Graphics g){
         for (int i = 60; i < B_WIDTH - 16; i += 16) {
             for (int j = 0; j < B_HEIGHT - 32; j += 16) {
                 if (i == 60 || j == 0 || j >= B_HEIGHT - 48 || i >= B_WIDTH - 48) {
@@ -113,9 +122,8 @@ public class Brett extends JPanel implements ActionListener {
                 drawImage(g, 90 + 32 * k, 32 + 32 * l, innerWall);
             }
         }
-        paintChar(g);
     }
-
+    
     private void paintChar(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.drawImage(c1.loadCharSprite(), c1.getX(), c1.getY(), this);
@@ -163,10 +171,14 @@ public class Brett extends JPanel implements ActionListener {
 //        }
 //
 //    }
-
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        updateChar();
+        repaint();
+    }
+    
+    private void updateChar(){
+        c1.move();
     }
 
     private class TAdapter extends KeyAdapter {
@@ -174,15 +186,12 @@ public class Brett extends JPanel implements ActionListener {
         @Override
         public void keyReleased(KeyEvent e) {
             c1.keyReleased(e);
-            repaint();
         }
 
         @Override
         public void keyPressed(KeyEvent e) {
             c1.keyPressed(e);
 //            checkCollision(e);
-            c1.move();
-            repaint();
         }
     }
 }
