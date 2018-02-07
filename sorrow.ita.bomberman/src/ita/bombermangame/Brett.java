@@ -19,6 +19,7 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import java.util.Random;
 
 /**
  *
@@ -29,9 +30,10 @@ public class Brett extends JPanel implements ActionListener {
     private final int B_WIDTH = 480;
     private final int B_HEIGHT = 272;
     private Timer timer;
-    
-//    private final int[] xInner = {88, 120, 152, 184, 216, 248, 280, 312, 344, 376, 408};
-//    private final int[] yInner = {32, 64, 96, 128, 160, 192};
+
+    private final int[] xInner = {88, 120, 152, 184, 216, 248, 280, 312, 344, 376, 408};
+    private final int[] yInner = {32, 64, 96, 128, 160, 192};
+    private BreakableBlock[] breakableBlock;
     private Charakter c1;
     private Image outerWall;
     private Image innerWall;
@@ -47,12 +49,12 @@ public class Brett extends JPanel implements ActionListener {
         setDoubleBuffered(true);
         setFocusable(true);
 
-        c1 = new Trump();
-
+        c1 = new Trump(xInner, yInner);
+        breakableBlock = getInnerLayout();
         outerWall = loadImage(ita.bombermangame.Brett.class.getResource("sprites/mauer/mauergeil.png"));
         innerWall = loadImage(ita.bombermangame.Brett.class.getResource("sprites/mauer/pixelmauermitte.png"));
-        
-        timer=new Timer(100, this);
+        randomBlocks();
+        timer = new Timer(100, this);
         timer.start();
     }
 
@@ -66,50 +68,68 @@ public class Brett extends JPanel implements ActionListener {
         Toolkit.getDefaultToolkit().sync();
     }
 
-    private Coords[] walls() {
-        int c = 0;
-        for (int i = 60; i < B_WIDTH - 16; i += 16) {
-            for (int j = 0; j < B_HEIGHT - 32; j += 16) {
-                if (i == 60 || j == 0 || j >= B_HEIGHT - 48 || i >= B_WIDTH - 48) {
-                    c++;
-                }
+    private void randomBlocks() {
+        Random r1=new Random();
+        for (BreakableBlock b : breakableBlock) {
+            int r=r1.nextInt(20);
+            System.out.println(r);
+            if (r + 1 < 10) {
+                b.zerbrechen();
             }
         }
-        for (int k = 0; k < 11; k++) {
-            for (int l = 0; l <= 5; l++) {
-                c++;
-            }
-        }
-        Coords[] ret = new Coords[c];
-        c = 0;
-        for (int i = 60; i < B_WIDTH - 16; i += 16) {
-            for (int j = 0; j < B_HEIGHT - 32; j += 16) {
-                if (i == 60 || j == 0 || j >= B_HEIGHT - 48 || i >= B_WIDTH - 32) {
-                    ret[c] = new Coords(i, j);
-                    c++;
-                }
+    }
 
+    private BreakableBlock[] getInnerLayout() {
+        int[] x = {72, 88, 104, 120, 136, 152, 168, 184, 200, 216, 232, 248, 264, 280, 296, 312, 328, 344, 360, 376, 392, 408, 424};
+        int[] y = {16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192, 208};
+        int c = 0;
+        for (int i = 0; i < x.length; i++) {
+            for (int j = 0; j < y.length; j++) {
+                for (int k = 0; k < xInner.length; k++) {
+                    for (int l = 0; l < yInner.length; l++) {
+                        if (!((x[i] == xInner[k] && y[j] == yInner[l]) || (x[i] == 72 && y[j] == 16) || (x[i] == 72 && y[j] == 32) || (x[i] == 88 && y[j] == 16))) {
+                            c++;
+                        }
+                    }
+                }
             }
         }
-        for (int k = 0; k < 11; k++) {
-            for (int l = 0; l <= 5; l++) {
-                ret[c] = new Coords(90 + 32 * k, 32 + 32 * l);
-                c++;
+        BreakableBlock[] b = new BreakableBlock[c];
+        c = 0;
+        for (int i = 0; i < x.length; i++) {
+            for (int j = 0; j < y.length; j++) {
+                for (int k = 0; k < xInner.length; k++) {
+                    for (int l = 0; l < yInner.length; l++) {
+                        if (!((x[i] == xInner[k] && y[j] == yInner[l]) || (x[i] == 72 && y[j] == 16) || (x[i] == 72 && y[j] == 32) || (x[i] == 88 && y[j] == 16))) {
+                            b[c] = new BreakableBlock(x[i], y[j]);
+                            c++;
+                        }
+                    }
+                }
             }
         }
-        return ret;
+        return b;
     }
 
     @Override
     public void paintComponent(Graphics g
     ) {
         super.paintComponent(g);
+        paintBBlocks(g);
         paintWalls(g);
         paintChar(g);
         Toolkit.getDefaultToolkit().sync();
     }
 
-    private void paintWalls(Graphics g){
+    private void paintBBlocks(Graphics g) {
+        for (BreakableBlock b : breakableBlock) {
+            if (b.getVisibility() == true) {
+                g.drawImage(b.getSprite(), b.getX()+2, b.getY(), this);
+            }
+        }
+    }
+
+    private void paintWalls(Graphics g) {
         for (int i = 60; i < B_WIDTH - 16; i += 16) {
             for (int j = 0; j < B_HEIGHT - 32; j += 16) {
                 if (i == 60 || j == 0 || j >= B_HEIGHT - 48 || i >= B_WIDTH - 48) {
@@ -123,9 +143,10 @@ public class Brett extends JPanel implements ActionListener {
             }
         }
     }
-    
+
     private void paintChar(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
+        c1.drawBomb(g);
         g2d.drawImage(c1.loadCharSprite(), c1.getX(), c1.getY(), this);
     }
 
@@ -176,9 +197,10 @@ public class Brett extends JPanel implements ActionListener {
         updateChar();
         repaint();
     }
-    
-    private void updateChar(){
-        c1.move();
+
+    private void updateChar() {
+        c1.move(breakableBlock);
+
     }
 
     private class TAdapter extends KeyAdapter {

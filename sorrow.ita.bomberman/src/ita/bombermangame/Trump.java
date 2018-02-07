@@ -5,7 +5,6 @@
  */
 package ita.bombermangame;
 
-import java.awt.event.KeyEvent;
 import java.net.URL;
 
 /**
@@ -14,7 +13,8 @@ import java.net.URL;
  */
 public class Trump extends Charakter {
 
-    public Trump() {
+    public Trump(int[] xInner, int[] yInner) {
+        super(xInner, yInner);
         initChar();
         super.charURL = charSprites();
     }
@@ -26,13 +26,14 @@ public class Trump extends Charakter {
         super.y = 16;
         super.heigth = 16;
         super.width = 16;
+        super.bombURL=bombSprite();
     }
 
     @Override
     protected URL bombSprite() {
         return Trump.class.getResource("sprites/bombs/bombAmi.png");
     }
-    
+
     @Override
     protected URL[] charSprites() {
         URL[] re = new URL[4];
@@ -43,7 +44,7 @@ public class Trump extends Charakter {
     }
 
     @Override
-    public void move() {
+    public void move(BreakableBlock[] breakable) {
         if (!mov) {
         } else {
             boolean wall = false;
@@ -73,48 +74,6 @@ public class Trump extends Charakter {
             System.out.println("x " + super.x + " y " + super.y);
         }
 
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        key = e.getKeyCode();
-
-        if (key == KeyEvent.VK_LEFT) {
-            super.dx = -16;
-        }
-
-        if (key == KeyEvent.VK_RIGHT) {
-            super.dx = 16;
-        }
-
-        if (key == KeyEvent.VK_UP) {
-            super.dy = -16;
-        }
-
-        if (key == KeyEvent.VK_DOWN) {
-            super.dy = 16;
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        key = e.getKeyCode();
-
-        if (key == KeyEvent.VK_LEFT) {
-            super.dx = 0;
-        }
-
-        if (key == KeyEvent.VK_RIGHT) {
-            super.dx = 0;
-        }
-
-        if (key == KeyEvent.VK_UP) {
-            super.dy = 0;
-        }
-
-        if (key == KeyEvent.VK_DOWN) {
-            super.dy = 0;
-        }
     }
 
 }
