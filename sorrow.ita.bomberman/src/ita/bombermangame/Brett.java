@@ -16,6 +16,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.net.URL;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -70,44 +71,32 @@ public class Brett extends JPanel implements ActionListener {
 
     private void randomBlocks() {
         Random r1=new Random();
-        for (BreakableBlock b : breakableBlock) {
-            int r=r1.nextInt(20);
+      
+        for (int i = 0 ; i<299;i++) {
+              int r=r1.nextInt(299);   
             System.out.println(r);
-            if (r + 1 < 10) {
-                b.zerbrechen();
-            }
-        }
+                //if(i==r){
+                breakableBlock[r].zerbrechen();
+                System.out.println("Hakai");
+               // } 
+            
+        
+    }
     }
 
     private BreakableBlock[] getInnerLayout() {
-        int[] x = {72, 88, 104, 120, 136, 152, 168, 184, 200, 216, 232, 248, 264, 280, 296, 312, 328, 344, 360, 376, 392, 408, 424};
-        int[] y = {16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192, 208};
-        int c = 0;
-        for (int i = 0; i < x.length; i++) {
-            for (int j = 0; j < y.length; j++) {
-                for (int k = 0; k < xInner.length; k++) {
-                    for (int l = 0; l < yInner.length; l++) {
-                        if (!((x[i] == xInner[k] && y[j] == yInner[l]) || (x[i] == 72 && y[j] == 16) || (x[i] == 72 && y[j] == 32) || (x[i] == 88 && y[j] == 16))) {
-                            c++;
-                        }
-                    }
-                }
+        //int[] x = {72, 88, 104, 120, 136, 152, 168, 184, 200, 216, 232, 248, 264, 280, 296, 312, 328, 344, 360, 376, 392, 408, 424};
+        //int[] y = {16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192, 208};
+        ArrayList<BreakableBlock> blist = new ArrayList<>();
+        BreakableBlock[] b = new BreakableBlock[300];
+        for (int i = 0; i < 23; i++) {
+            for (int j = 0; j < 13; j++) {
+                BreakableBlock block = new BreakableBlock(72+16*i, 16+j*16);
+                blist.add(block);
             }
         }
-        BreakableBlock[] b = new BreakableBlock[c];
-        c = 0;
-        for (int i = 0; i < x.length; i++) {
-            for (int j = 0; j < y.length; j++) {
-                for (int k = 0; k < xInner.length; k++) {
-                    for (int l = 0; l < yInner.length; l++) {
-                        if (!((x[i] == xInner[k] && y[j] == yInner[l]) || (x[i] == 72 && y[j] == 16) || (x[i] == 72 && y[j] == 32) || (x[i] == 88 && y[j] == 16))) {
-                            b[c] = new BreakableBlock(x[i], y[j]);
-                            c++;
-                        }
-                    }
-                }
-            }
-        }
+        blist.add(new BreakableBlock(72+16*23, 16+13*16));
+        b = blist.toArray(b);
         return b;
     }
 
@@ -122,10 +111,11 @@ public class Brett extends JPanel implements ActionListener {
     }
 
     private void paintBBlocks(Graphics g) {
-        for (BreakableBlock b : breakableBlock) {
-            if (b.getVisibility() == true) {
-                g.drawImage(b.getSprite(), b.getX()+2, b.getY(), this);
+        for (int i = 0; i<breakableBlock.length;i++) {
+            if (breakableBlock[i].getVisibility() == true) {
+                g.drawImage(breakableBlock[i].getSprite(), breakableBlock[i].getX()+2, breakableBlock[i].getY(), this);
             }
+            
         }
     }
 

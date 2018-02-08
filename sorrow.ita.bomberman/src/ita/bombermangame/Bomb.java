@@ -31,10 +31,12 @@ public class Bomb {
     public void explode(){
         if(time == 10){
             vis=false;
+            
         }else{
             time++;
         }
     }
+    
 
     public int getX() {
         return x;

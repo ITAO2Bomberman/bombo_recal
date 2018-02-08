@@ -71,7 +71,7 @@ public class Trump extends Charakter {
             if (super.y > 208) {
                 super.y = 208;
             }
-            System.out.println("x " + super.x + " y " + super.y);
+          //  System.out.println("x " + super.x + " y " + super.y);
         }
 
     }
