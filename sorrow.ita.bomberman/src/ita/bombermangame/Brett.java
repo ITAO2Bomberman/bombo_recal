@@ -115,6 +115,9 @@ public class Brett extends JPanel implements ActionListener {
             if (breakableBlock[i].getVisibility() == true) {
                 g.drawImage(breakableBlock[i].getSprite(), breakableBlock[i].getX()+2, breakableBlock[i].getY(), this);
             }
+            breakableBlock[0].zerbrechen();
+            breakableBlock[1].zerbrechen();
+            breakableBlock[13].zerbrechen();
             
         }
     }

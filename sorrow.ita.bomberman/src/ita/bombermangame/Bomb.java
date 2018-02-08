@@ -32,6 +32,7 @@ public class Bomb {
         if(time == 10){
             vis=false;
             
+            
         }else{
             time++;
         }

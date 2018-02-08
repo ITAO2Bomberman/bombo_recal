@@ -55,6 +55,11 @@ public class Trump extends Charakter {
                     }
                 }
             }
+            for (int i = 0; i < breakable.length; i++) {
+                if (breakable[i].getX() == super.x + super.bx && breakable[i].getY() == super.y + super.by && breakable[i].getVisibility() == true) {
+                 wall = true;   
+                }
+            }
             if (wall == false) {
                 super.y += super.dy;
                 super.x += super.dx;
