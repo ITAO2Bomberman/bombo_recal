@@ -13,8 +13,8 @@ import java.net.URL;
  */
 public class Trump extends Charakter {
 
-    public Trump(int[] xInner, int[] yInner) {
-        super(xInner, yInner);
+    public Trump(int[] xInner, int[] yInner, BreakableBlock[] block) {
+        super(xInner, yInner, block);
         initChar();
         super.charURL = charSprites();
     }
@@ -56,8 +56,9 @@ public class Trump extends Charakter {
                 }
             }
             for (int i = 0; i < breakable.length; i++) {
-                if (breakable[i].getX() == super.x + super.bx && breakable[i].getY() == super.y + super.by && breakable[i].getVisibility() == true) {
+                if (breakable[i].getX() == super.x + (super.dx) && breakable[i].getY()+super.dy == super.y + (super.dy)*2 && breakable[i].getVisibility() == true) {
                  wall = true;   
+                    System.out.println("Wall");
                 }
             }
             if (wall == false) {

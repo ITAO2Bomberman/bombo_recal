@@ -28,10 +28,16 @@ public class Bomb {
         return bombSprite;
     }
     
-    public void explode(){
+    public void explode(BreakableBlock[] b){
         if(time == 10){
             vis=false;
-            
+            for (int i = 0; i < b.length; i++) {
+                if(x+16 == b[i].getX() && y ==b[i].getY() || y+16 == b[i].getY() && x ==b[i].getX() ||x-16 == b[i].getX() && y ==b[i].getY() || y-16 == b[i].getY() && x ==b[i].getX()){
+                    b[i].zerbrechen();
+                }
+            }
+             
+           
             
         }else{
             time++;

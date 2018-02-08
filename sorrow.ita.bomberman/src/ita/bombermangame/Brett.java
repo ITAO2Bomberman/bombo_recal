@@ -49,9 +49,9 @@ public class Brett extends JPanel implements ActionListener {
         setPreferredSize(new Dimension(B_WIDTH, B_HEIGHT));
         setDoubleBuffered(true);
         setFocusable(true);
-
-        c1 = new Trump(xInner, yInner);
-        breakableBlock = getInnerLayout();
+breakableBlock = getInnerLayout();
+        c1 = new Trump(xInner, yInner, breakableBlock );
+        
         outerWall = loadImage(ita.bombermangame.Brett.class.getResource("sprites/mauer/mauergeil.png"));
         innerWall = loadImage(ita.bombermangame.Brett.class.getResource("sprites/mauer/pixelmauermitte.png"));
         randomBlocks();

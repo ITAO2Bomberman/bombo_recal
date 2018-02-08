@@ -28,10 +28,12 @@ public abstract class Charakter {
     protected int key = KeyEvent.VK_DOWN;
     protected final int[] xInner;
     protected final int[] yInner;
+    protected BreakableBlock[] block;
 
-    public Charakter(int[] xInner,int[] yInner ){
+    public Charakter(int[] xInner,int[] yInner ,BreakableBlock[] block){
         this.xInner=xInner;
         this.yInner=yInner;
+        this.block = block;
     }
     
     public abstract void initChar();
@@ -45,7 +47,7 @@ public abstract class Charakter {
             g.drawImage(b.getBombSprite(), b.getX(), b.getY(), null);
             return b;
         }).forEach((b) -> {
-            b.explode();
+            b.explode(block);
         });
     }
 
@@ -110,7 +112,7 @@ public abstract class Charakter {
     }
 
     public void keyReleased(KeyEvent e) {
-        key = e.getKeyCode();
+     key = e.getKeyCode();
 
         if (key == KeyEvent.VK_LEFT) {
             dx = 0;
