@@ -24,6 +24,7 @@ public abstract class Charakter {
     protected int bx, by;
     protected URL[] charURL;
     protected URL bombURL;
+    protected URL explodeicon;
     protected boolean mov = true;
     protected int key = KeyEvent.VK_DOWN;
     protected final int[] xInner;
@@ -34,7 +35,10 @@ public abstract class Charakter {
         this.xInner=xInner;
         this.yInner=yInner;
         this.block = block;
+        
     }
+    
+    protected abstract URL loadexplode();
     
     public abstract void initChar();
 
@@ -43,11 +47,56 @@ public abstract class Charakter {
     protected abstract URL[] charSprites();
 
     public void drawBomb(Graphics g) {
-        bomben.stream().filter((b) -> (b.getVis()==true)).map((b) -> {
+        bomben.stream().filter((b) -> ((b.getVis()==true && b.getBvis()==true) || (b.getBvis()==true && b.getVis()==false) || (b.getBvis()==false && b.getVis()==true))).map((b) -> {
+            if (b.getVis() == true) {
+                
+            
             g.drawImage(b.getBombSprite(), b.getX(), b.getY(), null);
+            }
             return b;
+            
         }).forEach((b) -> {
+            boolean up = false;
+            boolean down = false;
+            boolean left = false;
+            boolean right = false;            
             b.explode(block);
+            if(b.getBvis() == true){
+                for (int i = 0; i < yInner.length; i++) {
+                    for (int j = 0; j < xInner.length; j++) {
+                        if (yInner[i] == b.getY()-16 && xInner[j] == b.getX()) {
+                            up = true;
+                        }
+                        if (yInner[i] == b.getY()+16 && xInner[j] == b.getX()) {
+                            down = true;
+                        }
+                        if (yInner[i] == b.getY() && xInner[j]-16 == b.getX()) {
+                            left = true;
+                        }
+                        if (yInner[i] == b.getY() && xInner[j]+16 == b.getX()) {
+                            right = true;
+                        }
+                   
+ 
+                    }
+                }
+            g.drawImage(b.getexplodesprite(), b.getX(), b.getY(), null);
+                
+            //left
+            if(left == false){
+            g.drawImage(b.getexplodesprite(), b.getX()-16, b.getY(), null);
+            }
+//right
+                if (right == false) {
+            g.drawImage(b.getexplodesprite(), b.getX()+16, b.getY(), null);
+                }//down
+                if (up == false) {
+            g.drawImage(b.getexplodesprite(), b.getX(), b.getY()-16, null);
+                }//up
+                if(down == false){
+            g.drawImage(b.getexplodesprite(), b.getX(), b.getY()+16, null);
+            }
+            }
         });
     }
 
@@ -107,7 +156,8 @@ public abstract class Charakter {
         }
 
         if (key == KeyEvent.VK_SPACE) {
-            bomben.add(new Bomb(bombURL, x, y));
+            
+            bomben.add(new Bomb(explodeicon,bombURL, x, y));
         }
     }
 
