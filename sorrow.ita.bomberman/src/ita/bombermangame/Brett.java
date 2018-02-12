@@ -36,6 +36,7 @@ public class Brett extends JPanel implements ActionListener {
     private final int[] yInner = {32, 64, 96, 128, 160, 192};
     private BreakableBlock[] breakableBlock;
     private Charakter c1;
+    private Charakter c2;
     private Image outerWall;
     private Image innerWall;
 
@@ -51,8 +52,8 @@ public class Brett extends JPanel implements ActionListener {
         setFocusable(true);
 breakableBlock = getInnerLayout();
         c1 = new Trump(xInner, yInner, breakableBlock );
-        
-        outerWall = loadImage(ita.bombermangame.Brett.class.getResource("sprites/mauer/mauergeil.png"));
+        c2 = new Kim(xInner, yInner, breakableBlock);
+       outerWall = loadImage(ita.bombermangame.Brett.class.getResource("sprites/mauer/mauergeil.png"));
         innerWall = loadImage(ita.bombermangame.Brett.class.getResource("sprites/mauer/pixelmauermitte.png"));
         randomBlocks();
         timer = new Timer(100, this);
@@ -118,6 +119,9 @@ breakableBlock = getInnerLayout();
             breakableBlock[0].zerbrechen();
             breakableBlock[1].zerbrechen();
             breakableBlock[13].zerbrechen();
+            breakableBlock[298].zerbrechen();
+            breakableBlock[297].zerbrechen();
+            breakableBlock[298-13].zerbrechen();
             
         }
     }
@@ -141,6 +145,8 @@ breakableBlock = getInnerLayout();
         Graphics2D g2d = (Graphics2D) g;
         c1.drawBomb(g);
         g2d.drawImage(c1.loadCharSprite(), c1.getX(), c1.getY(), this);
+        c2.drawBomb(g);
+        g2d.drawImage(c2.loadCharSprite(), c2.getX(), c2.getY(), this);
     }
 
 //    public void checkCollision(KeyEvent e) {
@@ -193,6 +199,7 @@ breakableBlock = getInnerLayout();
 
     private void updateChar() {
         c1.move(breakableBlock);
+        c2.move(breakableBlock);
 
     }
 
@@ -201,11 +208,13 @@ breakableBlock = getInnerLayout();
         @Override
         public void keyReleased(KeyEvent e) {
             c1.keyReleased(e);
+            c2.keyReleased(e);
         }
 
         @Override
         public void keyPressed(KeyEvent e) {
             c1.keyPressed(e);
+            c2.keyPressed(e);
 //            checkCollision(e);
         }
     }
