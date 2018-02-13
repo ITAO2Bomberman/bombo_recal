@@ -19,12 +19,13 @@ public class Bomb {
     private boolean vis=true;
     private boolean bvis=false;
     private Image exSprite;
-    
+    // Setzt die Kooardinaten der Bombe, den Sprite der Bombe und den der Explosion
     public Bomb(URL explodeicon, URL bombURL,int x, int y){
         this.x=x;
         this.y=y;
         bombSprite=new ImageIcon(bombURL).getImage();
         exSprite = new ImageIcon(explodeicon).getImage();
+        //Skaliert den Explosionssprite
         exSprite=exSprite.getScaledInstance(16, 16, Image.SCALE_AREA_AVERAGING);
     }
     
@@ -35,12 +36,16 @@ public class Bomb {
     public Image getexplodesprite(){
         return exSprite;
     }
-    
+    // Leitet Explosion ein
     public void explode(BreakableBlock[] b){
+        // Wenn die Timer Int Variable bis 10 oder darüber hinaus gezählt hat
         if(time >= 10){
+            // Sichtbarkeiet der Bombe wird ausgeblendet
             vis=false;
+            // for_Schleife durchläuft die zerstörbaren Blöcke und überprüft ob es zu einer Kollison zwischen dem Explosionsradius und den Zerstörbaren blöcken kommt  
             for (int i = 0; i < b.length; i++) {
                 if(x+16 == b[i].getX() && y ==b[i].getY() || y+16 == b[i].getY() && x ==b[i].getX() ||x-16 == b[i].getX() && y ==b[i].getY() || y-16 == b[i].getY() && x ==b[i].getX()){
+                   // Zerstörungsmethode wird ausgeführt
                     b[i].zerbrechen();
                     
                 }
@@ -49,8 +54,10 @@ public class Bomb {
            
             
         }else{
+            //Wenn der Timer noch nicht abgelaufen ist wird die Timer Variable hochgezählt
             time++;
         }
+        //Dannach wird überprüft ob die Bombe noch sichtbar ist wenn nicht wird die Explosionsanzeigemethode ausgeführt
         if(vis==false)
         seeexplodeSprite();
     }
@@ -71,15 +78,17 @@ public class Bomb {
     public boolean getBvis() {
         return bvis;
     }
-    
+//Explosionsanzeigemethode
     public void seeexplodeSprite(){
+        //Boolische Variable zur einzeige der explosionen
         bvis = true;
-        
+        //Wenn die Timervariable den Wert 13 erreicht oder Überschritten hat soll die Explosion nicht angezeigt werden
         if (time >= 13) {
             bvis = false;
         }
         else{
         System.out.println(time);
+        //Wenn das nicht der Fall ist wird die Timervariable hochgezählt
         time++;
         }
         

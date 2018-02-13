@@ -13,24 +13,28 @@ import javax.swing.JFrame;
  * @author ala_pascal
  */
 public class App extends JFrame {
+// Initialiesiert den JFramw
 
     public App() {
         initApp();
     }
+//Fügt neues Spielfeld hinzu
 
     private void initApp() {
         add(new Brett());
-
+//Setzt Größe fest
         setSize(480, 272);
 
         setTitle("Bomberman");
+        
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        // Größe nicht Variable
         setResizable(false);
     }
 
     public static void main(String[] args) {
-
+// Startet die Anwendung
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {

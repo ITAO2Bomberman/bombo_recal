@@ -18,6 +18,7 @@ public class BreakableBlock {
     private final Image bSprite;
     
     public BreakableBlock(int x,int y){
+        //Sprite für die Zerstörbaren Blöcke wird geladen
         this.bSprite = new ImageIcon(App.class.getResource("sprites/mauer/breakable.png")).getImage();
         this.x=x;
         this.y=y;

@@ -30,6 +30,7 @@ public abstract class Charakter {
     protected final int[] xInner;
     protected final int[] yInner;
     protected BreakableBlock[] block;
+    protected boolean bomb;
 
     public Charakter(int[] xInner,int[] yInner ,BreakableBlock[] block){
         this.xInner=xInner;
@@ -37,16 +38,26 @@ public abstract class Charakter {
         this.block = block;
         
     }
-    
+    //Setzt eine Bombe (wird noch nicht verwendet)
+    protected boolean setbomb(boolean wert){
+        bomb = wert;
+        return wert;
+    }
+    //Abstrakte Klasse für das Laden des Explosionssprites
     protected abstract URL loadexplode();
-    
+    //Abstrakte Klasse zum Initialisieren des Charakters
     public abstract void initChar();
-
+    //Abstrakte Klassen zur KI
+    public abstract void startKI();
+    public abstract void stop();
+    
+    //Abstrakte Klasse zum Initialisieren des Bombensprites
     protected abstract URL bombSprite();
-
+    //Abstrakte Klasse zum Initialisieren des Charaktersprites
     protected abstract URL[] charSprites();
-
+    //Klasse zum zeichnen der Bomben 
     public void drawBomb(Graphics g) {
+        //ArrayList Stream zum zeichnen der Bombenelemente
         bomben.stream().filter((b) -> ((b.getVis()==true && b.getBvis()==true) || (b.getBvis()==true && b.getVis()==false) || (b.getBvis()==false && b.getVis()==true))).map((b) -> {
             if (b.getVis() == true) {
                 
@@ -56,14 +67,19 @@ public abstract class Charakter {
             return b;
             
         }).forEach((b) -> {
+           //Variablen zum zeichnen der Explosion wenn die Explosion auf eine Mauer trifft soll die Explosion nicht gezeichnet werden
             boolean up = false;
             boolean down = false;
             boolean left = false;
             boolean right = false;            
             b.explode(block);
+            //wenn die Explosionsvariable auf true steht soll er mit der Überprüfung starten
             if(b.getBvis() == true){
+                //Schleife geht die Inneren Blöcke durch
                 for (int i = 0; i < yInner.length; i++) {
                     for (int j = 0; j < xInner.length; j++) {
+                        //Überprüft die einzelnen Positionen ob die Explosionen die Inneren Blöcke Berühren
+                        //Wenn sie Kollidieren wird ein true zurückgegeben
                         if (yInner[i] == b.getY()-16 && xInner[j] == b.getX()) {
                             up = true;
                         }
@@ -81,7 +97,7 @@ public abstract class Charakter {
                     }
                 }
             g.drawImage(b.getexplodesprite(), b.getX(), b.getY(), null);
-                
+            //Wenn die Variablen ein false zurück geben wird wird die Explosion gezeichnet
             //left
             if(left == false){
             g.drawImage(b.getexplodesprite(), b.getX()-16, b.getY(), null);
@@ -99,8 +115,9 @@ public abstract class Charakter {
             }
         });
     }
-
+//Läd die Charakter Sprites in Abhängikeit vom Tastendruck
     public Image loadCharSprite() {
+        //Mit dem Switch-Case wird in Abhängigkeit des Tastendrucks der Demensprächende Sprite geladen
         switch (key) {
             case KeyEvent.VK_LEFT: {
                 return new ImageIcon(charURL[1]).getImage();
@@ -117,7 +134,7 @@ public abstract class Charakter {
         }
         return new ImageIcon(charURL[0]).getImage();
     }
-
+    //Abstrakte Methode zur Bewegung
     public abstract void move(BreakableBlock[] breakable);
 
     public int getX() {
@@ -135,7 +152,7 @@ public abstract class Charakter {
     public Rectangle getBounds() {
         return new Rectangle(x, y, width, heigth);
     }
-
+// Bei Tastendruck werden die Bewegungsvariablen verändert
     public void keyPressed(KeyEvent e) {
         key = e.getKeyCode();
 
@@ -154,13 +171,13 @@ public abstract class Charakter {
         if (key == KeyEvent.VK_DOWN) {
             dy = 16;
         }
-
+        // Beim drücken der Lehrtaste wird ein neues Bombenobjekt erstellt
         if (key == KeyEvent.VK_SPACE) {
             
             bomben.add(new Bomb(explodeicon,bombURL, x, y));
         }
     }
-
+    //Beim loslassen Tasten werden die bewegungsvariablen auf null gesetzt
     public void keyReleased(KeyEvent e) {
      key = e.getKeyCode();
 
@@ -180,4 +197,6 @@ public abstract class Charakter {
             dy = 0;
         }
     }
+    //Noch nicht benutzt
+    protected abstract boolean dropbomb();
 }
