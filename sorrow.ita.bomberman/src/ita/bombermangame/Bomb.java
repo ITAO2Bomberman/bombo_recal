@@ -37,17 +37,24 @@ public class Bomb {
         return exSprite;
     }
     // Leitet Explosion ein
-    public void explode(BreakableBlock[] b){
+    public void explode(BreakableBlock[] b, Charakter c1, Charakter c2){
         // Wenn die Timer Int Variable bis 10 oder darüber hinaus gezählt hat
         if(time >= 10){
             // Sichtbarkeiet der Bombe wird ausgeblendet
             vis=false;
             // for_Schleife durchläuft die zerstörbaren Blöcke und überprüft ob es zu einer Kollison zwischen dem Explosionsradius und den Zerstörbaren blöcken kommt  
             for (int i = 0; i < b.length; i++) {
-                if(x+16 == b[i].getX() && y ==b[i].getY() || y+16 == b[i].getY() && x ==b[i].getX() ||x-16 == b[i].getX() && y ==b[i].getY() || y-16 == b[i].getY() && x ==b[i].getX()){
+                if(x+16 == b[i].getX() && y ==b[i].getY() || y+16 == b[i].getY() && x ==b[i].getX() ||x-16 == b[i].getX() && y ==b[i].getY() || y-16 == b[i].getY() && x ==b[i].getX()
+                    ){
                    // Zerstörungsmethode wird ausgeführt
                     b[i].zerbrechen();
                     
+                }
+                if(x+16 == c1.getX() && y == c1.getY() || x-16 == c1.getX() && y == c1.getY() || x == c1.getX() && y+16 == c1.getY() || x == c1.getX() && y-16 == c1.getY()|| x == c1.getX() && y == c1.getY()){
+                    c1.setVis(false);
+                }
+                if(x+16 == c2.getX() && y == c2.getY() || x-16 == c2.getX() && y == c2.getY() || x == c2.getX() && y+16 == c2.getY() || x == c2.getX() && y-16 == c2.getY()|| x == c2.getX() && y == c2.getY()){
+                    c2.setVis(false);
                 }
             }
              

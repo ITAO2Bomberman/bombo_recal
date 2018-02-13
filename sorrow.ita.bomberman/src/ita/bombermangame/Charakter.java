@@ -31,6 +31,16 @@ public abstract class Charakter {
     protected final int[] yInner;
     protected BreakableBlock[] block;
     protected boolean bomb;
+    protected boolean vis = true;
+
+    public boolean getVis() {
+        return vis;
+    }
+
+    public void setVis(boolean vis) {
+        this.vis = vis;
+    }
+     
 
     public Charakter(int[] xInner,int[] yInner ,BreakableBlock[] block){
         this.xInner=xInner;
@@ -48,15 +58,15 @@ public abstract class Charakter {
     //Abstrakte Klasse zum Initialisieren des Charakters
     public abstract void initChar();
     //Abstrakte Klassen zur KI
-    public abstract void startKI();
-    public abstract void stop();
+//    public abstract void startKI();
+//    public abstract void stop();
     
     //Abstrakte Klasse zum Initialisieren des Bombensprites
     protected abstract URL bombSprite();
     //Abstrakte Klasse zum Initialisieren des Charaktersprites
     protected abstract URL[] charSprites();
     //Klasse zum zeichnen der Bomben 
-    public void drawBomb(Graphics g) {
+    public void drawBomb(Graphics g, Charakter c1, Charakter c2) {
         //ArrayList Stream zum zeichnen der Bombenelemente
         bomben.stream().filter((b) -> ((b.getVis()==true && b.getBvis()==true) || (b.getBvis()==true && b.getVis()==false) || (b.getBvis()==false && b.getVis()==true))).map((b) -> {
             if (b.getVis() == true) {
@@ -72,7 +82,7 @@ public abstract class Charakter {
             boolean down = false;
             boolean left = false;
             boolean right = false;            
-            b.explode(block);
+            b.explode(block,c1,c2);
             //wenn die Explosionsvariable auf true steht soll er mit der Überprüfung starten
             if(b.getBvis() == true){
                 //Schleife geht die Inneren Blöcke durch
@@ -175,6 +185,7 @@ public abstract class Charakter {
         if (key == KeyEvent.VK_SPACE) {
             
             bomben.add(new Bomb(explodeicon,bombURL, x, y));
+            
         }
     }
     //Beim loslassen Tasten werden die bewegungsvariablen auf null gesetzt

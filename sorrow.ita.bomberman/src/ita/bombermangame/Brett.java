@@ -162,10 +162,26 @@ public class Brett extends JPanel implements ActionListener {
 //Zeichnet die Charaktere und die Bomben
     private void paintChar(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        c1.drawBomb(g);
+        c1.drawBomb(g, c1,c2);
+        System.out.println(c1.getVis());
+        if (c1.getVis()) {
         g2d.drawImage(c1.loadCharSprite(), c1.getX(), c1.getY(), this);
-        c2.drawBomb(g);
+        }
+        else{
+            //Gewinner Display einbinden
+            System.out.println("Kim gewinnt");
+            
+        }
+        c2.drawBomb(g,c1,c2);
+        if(c2.getVis()){
         g2d.drawImage(c2.loadCharSprite(), c2.getX(), c2.getY(), this);
+    }
+        else{
+            //Gewinner Display einbinden
+            System.out.println("Trump gewinnt");
+                        
+            
+        }
     }
 
 //    public void checkCollision(KeyEvent e) {
@@ -217,23 +233,13 @@ public class Brett extends JPanel implements ActionListener {
         updateChar();
         repaint();
     }
-    //Noch in der Arbeit
-    private void KI(){
-        if(time % 12 ==0){
-            c2.startKI();
-            time++;
-        }
-        else{
-        c2.stop();
-        time++;
-        }
-    }
+   
     //Bewegt die Charaktere 
     private void updateChar() {
         c1.move(breakableBlock);
      
         c2.move(breakableBlock);
-        KI();
+        
         
 
     }
