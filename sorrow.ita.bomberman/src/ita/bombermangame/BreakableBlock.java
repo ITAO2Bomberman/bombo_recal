@@ -10,7 +10,7 @@ import javax.swing.ImageIcon;
 
 /**
  *
- * @author ala_pascal
+ * @author Olenberg, Heinrich, Musiolik, Szymczak
  */
 public class BreakableBlock {
     private final int x,y;

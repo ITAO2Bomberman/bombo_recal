@@ -15,7 +15,7 @@ import javax.swing.ImageIcon;
 
 /**
  *
- * @author ala_pascal
+ * @author Olenberg, Heinrich, Musiolik, Szymczak
  */
 public abstract class Charakter {
 
@@ -32,7 +32,19 @@ public abstract class Charakter {
     protected BreakableBlock[] block;
     protected boolean bomb;
     protected boolean vis = true;
+    protected int punktestand = 0;
 
+    public int getPunktestand() {
+        return punktestand;
+    }
+
+    public void setPunktestand(int erhöhen) {
+        punktestand+=erhöhen;
+    }
+
+    
+    
+    
     public boolean getVis() {
         return vis;
     }
@@ -81,8 +93,9 @@ public abstract class Charakter {
             boolean up = false;
             boolean down = false;
             boolean left = false;
-            boolean right = false;            
-            b.explode(block,c1,c2);
+            boolean right = false;        
+            
+            punktestand = punktestand + b.explode(block,c1,c2);
             //wenn die Explosionsvariable auf true steht soll er mit der Überprüfung starten
             if(b.getBvis() == true){
                 //Schleife geht die Inneren Blöcke durch

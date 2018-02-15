@@ -10,7 +10,7 @@ import java.net.URL;
 import javax.swing.ImageIcon;
 /**
  *
- * @author ala_pascal
+ * @author Olenberg, Heinrich, Musiolik, Szymczak
  */
 public class Bomb {
     private Image bombSprite;
@@ -37,7 +37,8 @@ public class Bomb {
         return exSprite;
     }
     // Leitet Explosion ein
-    public void explode(BreakableBlock[] b, Charakter c1, Charakter c2){
+    public int explode(BreakableBlock[] b, Charakter c1, Charakter c2){
+        int q = 0;
         // Wenn die Timer Int Variable bis 10 oder darüber hinaus gezählt hat
         if(time >= 10){
             // Sichtbarkeiet der Bombe wird ausgeblendet
@@ -46,15 +47,22 @@ public class Bomb {
             for (int i = 0; i < b.length; i++) {
                 if(x+16 == b[i].getX() && y ==b[i].getY() || y+16 == b[i].getY() && x ==b[i].getX() ||x-16 == b[i].getX() && y ==b[i].getY() || y-16 == b[i].getY() && x ==b[i].getX()
                     ){
+                    if (b[i].getVisibility() == true) {
+                        q++;
+                    }
                    // Zerstörungsmethode wird ausgeführt
                     b[i].zerbrechen();
                     
                 }
                 if(x+16 == c1.getX() && y == c1.getY() || x-16 == c1.getX() && y == c1.getY() || x == c1.getX() && y+16 == c1.getY() || x == c1.getX() && y-16 == c1.getY()|| x == c1.getX() && y == c1.getY()){
+                    
                     c1.setVis(false);
+                   
                 }
                 if(x+16 == c2.getX() && y == c2.getY() || x-16 == c2.getX() && y == c2.getY() || x == c2.getX() && y+16 == c2.getY() || x == c2.getX() && y-16 == c2.getY()|| x == c2.getX() && y == c2.getY()){
+                   
                     c2.setVis(false);
+                   
                 }
             }
              
@@ -65,9 +73,12 @@ public class Bomb {
             time++;
         }
         //Dannach wird überprüft ob die Bombe noch sichtbar ist wenn nicht wird die Explosionsanzeigemethode ausgeführt
-        if(vis==false)
+        if(vis==false){
         seeexplodeSprite();
-    }
+        }
+        
+        return (q*q)*10;
+        }
     
 
     public int getX() {

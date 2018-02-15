@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 
 /**
  *
- * @author ala_pascal
+ * @author Olenberg, Heinrich, Musiolik, Szymczak 
  */
 public class App extends JFrame {
 // Initialiesiert den JFramw
@@ -25,7 +25,7 @@ public class App extends JFrame {
 //Setzt Größe fest
         setSize(480, 272);
 
-        setTitle("Bomberman");
+        setTitle("President War");
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);

@@ -7,6 +7,7 @@ package ita.bombermangame;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -24,7 +25,7 @@ import java.util.Random;
 
 /**
  *
- * @author ala_pascal
+ * @author Olenberg, Heinrich, Musiolik, Szymczak
  */
 public class Brett extends JPanel implements ActionListener {
 
@@ -40,7 +41,12 @@ public class Brett extends JPanel implements ActionListener {
     private Image outerWall;
     private Image innerWall;
     private int time = 1;
-
+    private int punkteDrump = 0;
+    private int punkteKim = 0;
+    private boolean wind = true;
+    private boolean wink = true;
+    
+    
     public Brett() {
         initBrett();
     }
@@ -120,11 +126,34 @@ public class Brett extends JPanel implements ActionListener {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+        
         paintBBlocks(g);
         paintWalls(g);
         paintChar(g);
+        paintpunkte(g);
         Toolkit.getDefaultToolkit().sync();
     }
+    
+    private void paintpunkte(Graphics g){
+        
+        punkteDrump = c1.getPunktestand();
+        punkteKim = c2.getPunktestand();
+        
+				Graphics2D g2d=(Graphics2D)g;
+				g2d.setColor(Color.red);
+				//Font erzeugen
+				Font myFont=new Font("Arial", Font.BOLD, 14);
+		
+				String s=""+punkteDrump;
+				
+				g2d.setFont( myFont ); //Schriftart setzen
+				g2d.drawString(s,14,14); //String rendern
+                                
+                                s=""+punkteKim;
+                                g2d.drawString(s,14,28);
+
+    }
+    
 //Zeichnet die Zerstörbaren Blöcke
     private void paintBBlocks(Graphics g) {
         //Überprüft im gesamten Array ob die Blöcke sichtbar sind wenn nicht werden sie nicht gezeichnet
@@ -162,24 +191,34 @@ public class Brett extends JPanel implements ActionListener {
 //Zeichnet die Charaktere und die Bomben
     private void paintChar(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        c1.drawBomb(g, c1,c2);
+        
         System.out.println(c1.getVis());
         if (c1.getVis()) {
+            c1.drawBomb(g, c1,c2);
         g2d.drawImage(c1.loadCharSprite(), c1.getX(), c1.getY(), this);
         }
         else{
             //Gewinner Display einbinden
-            System.out.println("Kim gewinnt");
-            
+            while (wink) {                
+            c2.setPunktestand((10*10)*34);
+                System.out.println("Kim gewinnt");
+            wink = false;
+            }
         }
-        c2.drawBomb(g,c1,c2);
+        
         if(c2.getVis()){
+            c2.drawBomb(g,c1,c2);
         g2d.drawImage(c2.loadCharSprite(), c2.getX(), c2.getY(), this);
     }
         else{
             //Gewinner Display einbinden
+            while (wind) {                
+                
+            
+                c1.setPunktestand((10*10)*34);
             System.out.println("Trump gewinnt");
-                        
+            wind = false;
+            }        
             
         }
     }
